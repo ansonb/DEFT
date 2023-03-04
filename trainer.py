@@ -109,7 +109,7 @@ class Trainer():
 			if self.tasker.is_static:
 				s = self.prepare_static_sample(s)
 			else:
-				if 'transformer' in self.args.model:
+				if 'transformer' in self.args.model or 'DEFT' in self.args.model:
 					if self.args.transformer_parameters.get('lap_pos_enc',False):
 						pos_enc_list = split.pos_enc_list[sidx]
 					else:
@@ -130,7 +130,7 @@ class Trainer():
 				else:
 					s = self.prepare_sample(s)
 
-			if 'transformer' in self.args.model:
+			if 'transformer' in self.args.model or 'DEFT' in self.args.model:
 				if self.args.model=='DEFT':
 					predictions, nodes_embs = self.predict(s.hist_adj_list,s.hist_ndFeats_list,s.label_sp['idx'],s.node_mask_list,graph_list=s.graph_list,hist_adj_list_u=s.hist_adj_list_u)
 				elif self.args.model=='DEFT_h':
