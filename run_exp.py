@@ -211,10 +211,6 @@ def build_gcn(args,tasker):
 			return models_transformer.Spatio_Temporal_Transformer(transformer_args, gcn_args, activation = torch.nn.RReLU(), device = args.device, lappe=True, timepe=True).to(args.device)
 		elif args.model == 'static_spatial_transformer':
 			return models_transformer.StaticGraphTransformer(transformer_args, gcn_args, activation = torch.nn.RReLU(), device = args.device, lappe=True, timepe=False).to(args.device)
-		elif args.model == 'hgt_transformer':
-			return models_transformer.HGT(transformer_args, gcn_args, activation = torch.nn.RReLU(), device = args.device, lappe=True, timepe=False).to(args.device)
-		elif args.model == 'hgt_transformer_v2':
-			return models_transformer.HGT_v2(transformer_args, gcn_args, activation = torch.nn.RReLU(), device = args.device, lappe=True, timepe=False).to(args.device)
 		elif args.model == 'DEFT':
 			return model_deft.DEFT(transformer_args, gcn_args, activation = torch.nn.RReLU(), device = args.device, data=args.data)
 		elif args.model == 'DEFT_h':
