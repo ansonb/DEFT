@@ -1,0 +1,108 @@
+data: elliptic_temporal #HELP: arxiv, bitcoin, aml_sim, dbg, elliptic, elliptic_temporal
+elliptic_args:
+  folder: ./data/elliptic_temporal
+  tar_file: elliptic_bitcoin_dataset_cont.tar.gz
+  feats_file: elliptic_bitcoin_dataset_cont/elliptic_txs_features.csv
+  edges_file: elliptic_bitcoin_dataset_cont/elliptic_txs_edgelist.csv
+  classes_file: elliptic_bitcoin_dataset_cont/elliptic_txs_classes.csv
+  times_file: elliptic_bitcoin_dataset_cont/elliptic_txs_nodetime.csv
+  aggr_time: 1
+
+use_cuda: True
+use_logfile: True
+
+model: DEFT
+
+task: node_cls
+
+class_weights: [ 0.35, 0.65]
+use_2_hot_node_feats: False
+use_1_hot_node_feats: False
+save_node_embeddings: False
+
+train_proportion: 0.65
+dev_proportion: 0.1
+num_epochs: 800 #number of passes though the data
+steps_accum_gradients: 1
+learning_rate: 0.001
+learning_rate_min: 0.001
+learning_rate_max: 0.02
+negative_mult_training: 20
+negative_mult_test: 100
+smart_neg_sampling: False
+seed: 1234
+target_measure: F1 # measure to define the best epoch F1, Precision, Recall, MRR, MAP
+target_class: 1 # Target class to get the measure to define the best epoch (all, 0, 1)
+early_stop_patience: 100
+
+eval_after_epochs: 5
+adj_mat_time_window: 1  
+adj_mat_time_window_min: 1
+adj_mat_time_window_max: 10
+num_hist_steps: 5 # number of previous steps used for prediction
+num_hist_steps_min: 1 # only used if num_hist_steps: None
+num_hist_steps_max: 10 # only used if num_hist_steps: None
+data_loading_params:
+  batch_size: 1
+  num_workers: 6
+
+gcn_parameters:
+  feats_per_node: 50
+  feats_per_node_min: 30
+  feats_per_node_max: 312
+  layer_1_feats: 32
+  layer_1_feats_min: 30
+  layer_1_feats_max: 500
+  layer_2_feats: None
+  layer_2_feats_same_as_l1: True
+  k_top_grcu: 200
+  num_layers: 2
+  lstm_l1_layers: 125
+  lstm_l1_feats: 100  # only used with sp_lstm_B_trainer
+  lstm_l1_feats_min: 50
+  lstm_l1_feats_max: 500
+  lstm_l2_layers: 1 # only used with both sp_lstm_A_trainer and sp_lstm_B_trainer
+  lstm_l2_feats: 400 # only used with both sp_lstm_A_trainer and sp_lstm_B_trainer
+  lstm_l2_feats_same_as_l1: True
+  cls_feats: 32 # Hidden size of the classifier
+  cls_feats_min: 32
+  cls_feats_max: 700
+comments:
+  - comments
+transformer_parameters:
+  in_dim: 100 # node_dim (feat is an integer)
+  hidden_dim: 32
+  out_dim: 32
+  n_classes: 2
+  n_heads: 4
+  num_heads: 4
+  in_feat_dropout: 0.0
+  dropout: 0.0
+  L: 1
+  readout: mean
+  layer_norm: False
+  batch_norm: True
+  residual: True
+  lap_pos_enc: False
+  wl_pos_enc: False
+  pos_enc_dim: 8
+  full_graph: False 
+  out_feats1: 32
+  filter_order: 8
+  in_channels_sgnn: 32
+  out_channels_sgnn: 32
+  fc1_dim: 32
+  pe_dim: 32
+  out_feats: 32
+  layer_norm: False
+  batch_norm: True
+  is_recurrent: False
+  sgwt_scales: [1]
+  use_transformer: True
+  aggregator: ''
+  concat_in_skipfeat: False
+  rt_residual: True
+  skip_in_feat: True
+  use_spatial_feat_in_lpe: True
+  use_spatial_feat_in_rgt_ip: True
+  skip_rgt_in_feat: False
