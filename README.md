@@ -7,7 +7,7 @@ This repository contains the code for [Learnable Spectral Wavelets on Dynamic Gr
 
 8 datasets were used in the paper:
 
-- stochastic block model: See the 'data' folder. Untar the file for use.
+- stochastic block model: Downloadable from https://github.com/IBM/EvolveGCN/tree/master/data
 - bitcoin OTC: Downloadable from http://snap.stanford.edu/data/soc-sign-bitcoin-otc.html
 - bitcoin Alpha: Downloadable from http://snap.stanford.edu/data/soc-sign-bitcoin-alpha.html
 - uc_irvine: Downloadable from http://konect.uni-koblenz.de/networks/opsahl-ucsocial
