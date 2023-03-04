@@ -148,7 +148,7 @@ def build_gcn(args,tasker):
 	gcn_args.use_2_hot_node_feats = args.use_2_hot_node_feats
 	gcn_args.use_1_hot_node_feats = args.use_1_hot_node_feats 
 
-	if 'transformer' in args.model:
+	if 'transformer' in args.model or 'DEFT' in args.model:
 		args.transformer_parameters['use_transformer'] = args.transformer_parameters.get('use_transformer', True)
 		args.transformer_parameters['concat_in_skipfeat'] = args.transformer_parameters.get('concat_in_skipfeat', False)
 		# args.transformer_parameters['rt_residual'] = args.transformer_parameters.get('rt_residual', True)
