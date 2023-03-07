@@ -129,7 +129,7 @@ def load_data_from_tar(file, tar_archive, replace_unknow=False, starting_line=1,
     return data
 
 def load_data_from_file(file, replace_unknow=False, starting_line=1, sep=',', type_fn = float, tensor_const = torch.DoubleTensor):
-    with open(file, 'r') as f:
+    with open(file, 'rb') as f:
         lines = f.read()#
         lines=lines.decode('utf-8')
     if replace_unknow:
