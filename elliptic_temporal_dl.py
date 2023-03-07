@@ -6,7 +6,7 @@ import time
 import tarfile
 import itertools
 import numpy as np
-
+import traceback
 
 class Elliptic_Temporal_Dataset():
 	def __init__(self,args):
@@ -22,7 +22,13 @@ class Elliptic_Temporal_Dataset():
 		self.nodes, self.nodes_feats = self.load_node_feats(args.elliptic_args, tar_archive)
 
 	def load_node_feats(self, elliptic_args, tar_archive):
-		data = u.load_data_from_tar(elliptic_args.feats_file, tar_archive, starting_line=0)
+		try:
+			data = u.load_data_from_tar(elliptic_args.feats_file, tar_archive, starting_line=0)
+		except Exception as e:
+			print('== Exception: ',e)
+			traceback.print_exc()
+			filepath = os.path.join(elliptic_args.folder, elliptic_args.feats_file)
+			data = u.load_data_from_file(filepath, starting_line=0)
 		nodes = data
 
 		nodes_feats = nodes[:,1:]
@@ -35,8 +41,20 @@ class Elliptic_Temporal_Dataset():
 
 
 	def load_node_labels(self, elliptic_args, tar_archive):
-		labels = u.load_data_from_tar(elliptic_args.classes_file, tar_archive, replace_unknow=True).long()
-		times = u.load_data_from_tar(elliptic_args.times_file, tar_archive, replace_unknow=True).long()
+		try:
+			labels = u.load_data_from_tar(elliptic_args.classes_file, tar_archive, replace_unknow=True).long()
+		except Exception as e:
+			print('== Exception: ',e)
+			traceback.print_exc()
+			filepath = os.path.join(elliptic_args.folder, elliptic_args.classes_file)
+			labels = u.load_data_from_file(filepath, replace_unknow=True)
+		try:
+			times = u.load_data_from_tar(elliptic_args.times_file, tar_archive, replace_unknow=True).long()
+		except Exception as e:
+			print('== Exception: ',e)
+			traceback.print_exc()
+			filepath = os.path.join(elliptic_args.folder, elliptic_args.times_file)
+			times = u.load_data_from_file(filepath, replace_unknow=True)
 		lcols = u.Namespace({'nid': 0,
 							 'label': 1})
 		tcols = u.Namespace({'nid':0, 'time':1})
@@ -55,7 +73,13 @@ class Elliptic_Temporal_Dataset():
 
 
 	def load_transactions(self, elliptic_args, tar_archive):
-		data = u.load_data_from_tar(elliptic_args.edges_file, tar_archive, type_fn=float, tensor_const=torch.LongTensor)
+		try:
+			data = u.load_data_from_tar(elliptic_args.edges_file, tar_archive, type_fn=float, tensor_const=torch.LongTensor)
+		except Exception as e:
+			print('== Exception: ',e)
+			traceback.print_exc()
+			filepath = os.path.join(elliptic_args.folder, elliptic_args.edges_file)
+			data = u.load_data_from_file(filepath, type_fn=float, tensor_const=torch.LongTensor)
 		tcols = u.Namespace({'source': 0,
 							 'target': 1,
 							 'time': 2})

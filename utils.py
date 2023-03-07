@@ -128,6 +128,21 @@ def load_data_from_tar(file, tar_archive, replace_unknow=False, starting_line=1,
     #print (file,'data size', data.size())
     return data
 
+def load_data_from_file(file, replace_unknow=False, starting_line=1, sep=',', type_fn = float, tensor_const = torch.DoubleTensor):
+    with open(file, 'r') as f:
+        lines = f.read()#
+        lines=lines.decode('utf-8')
+    if replace_unknow:
+        lines=lines.replace('unknow', '-1')
+        lines=lines.replace('-1n', '-1')
+
+    lines=lines.splitlines()
+
+    data = [[type_fn(r) for r in row.split(sep)] for row in lines[starting_line:]]
+    data = tensor_const(data)
+    #print (file,'data size', data.size())
+    return data
+
 def create_parser():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--config_file',default='experiments/parameters_example.yaml', type=argparse.FileType(mode='r'), help='optional, yaml file containing parameters to be used, overrides command line parameters')
