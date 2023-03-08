@@ -19,7 +19,7 @@ save_node_embeddings: False
 
 train_proportion: 0.85  
 dev_proportion: 0.1 
-num_epochs: 500 #number of passes though the data 
+num_epochs: 10 #number of passes though the data 
 steps_accum_gradients: 1  
 learning_rate: 0.005  
 learning_rate_min: 0.001  
@@ -30,7 +30,7 @@ smart_neg_sampling: False
 seed: 2020  
 target_measure: F1 # measure to define the best epoch F1, Precision, Recall, MRR, MAP 
 target_class: AVG # Target class to get the measure to define the best epoch (all, 0, 1)  
-early_stop_patience: 100  
+early_stop_patience: 10  
 eval_after_epochs: 5  
 adj_mat_time_window: 1    
 adj_mat_time_window_min: 1  
